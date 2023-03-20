@@ -1,0 +1,44 @@
+console.log(allevents.length)
+const allevents = await confessions.queryFilter("Confessed")
+something.length
+something
+const something = await confessions.on("Confessed", function(event){console.log("result it" + event)})
+await confessions.on("Confessed", function(event){console.log("result it" + event)})
+confessions.on("Confessed", function(event){console.log("result it" + event)})
+confessions.on("confess", function(event){console.log("result it" + event)})
+console.log(transactionReceipter.events[0].args.confession)
+console.log(transactionReceipt.events.length)
+const transactionReceipter = await transactionResponser.wait()
+const transactionResponser = await confessions.confess("yet another confession")
+console.log(transactionReceipt.events.length)
+console.log(transactionReceipt.events)
+console.log(transactionReceipt.events[0].args.confession)
+)
+console.log(transactionReceipt.events[0].args.confession.toString()
+console.log('hi")
+()
+console.log(transactionReceipt.events[0].args.confession
+console.log(transactionReceipt.events[0])
+const transactionReceipt = await transactionResponse.wait()
+const transactionResponse = await confessions.confess("another confession")
+confessions.confess("something that is a confession")
+confessions
+const confessions= await confessionsFactory.deploy()
+confessions= await confessionsFactory.deploy()
+const confessionsFactory = await ethers.getContractFactory("Confessions")
+confessionFactory = ethers.getContractFactory("Confessions")
+await confessionsFactory.something()
+thatThing
+thatThing = await confessionsFactory.something()
+thisThing
+const thisThing = confessionsFactory.something()
+confessionsFactory.something()
+confessionsFactory.something
+confessionsFactory.address
+const confessionsFactory = await ConfessionsFactory.deploy()
+const ConfessionsFactory = await ethers.getContractFactory("Confessions")
+ethers
+something
+console.log("hi")
+ethers
+config

@@ -11,10 +11,6 @@ contract Confessions{
     
     } 
 
-
-
-
-
 }
 
 

@@ -8,11 +8,16 @@ import {
   darkTheme
 } from '@rainbow-me/rainbowkit';
 import { configureChains, createClient, WagmiConfig } from 'wagmi';
-import { mainnet, polygon, optimism, arbitrum } from 'wagmi/chains';
+import { mainnet, polygon, optimism, arbitrum, polygonMumbai } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
+import { Inter, Cardo, IM_Fell_English } from 'next/font/google';
+
+const inter = Inter({subsets:['latin'], variable:"--font-inter"})
+const cardo = Cardo({subsets:["latin-ext"], weight:["400", "700"], variable:"--font-cardo"})
+const imfell = IM_Fell_English({subsets:["latin"], weight:["400"], variable:"--font-imfell"})
 
 const { chains, provider } = configureChains(
-  [mainnet, polygon, optimism, arbitrum],
+  [polygonMumbai],
   [
     publicProvider()
   ]
@@ -35,12 +40,14 @@ export default function App({ Component, pageProps }: AppProps) {
   
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider modalSize='compact' chains={chains} theme={darkTheme({
-      accentColor: '#a100fe',
+      accentColor: '#9e8d75',
       accentColorForeground: 'white',
-      borderRadius: 'medium',
+      borderRadius: "small",
       fontStack: 'system',
       overlayBlur: 'small',
-    })}>  <Component {...pageProps} />
+      
+    })}>  
+    <main className={`${inter.variable} ${cardo.variable} ${imfell.variable} bg-[#333333] `}><Component {...pageProps} /></main>
   
   </RainbowKitProvider>
     </WagmiConfig>)

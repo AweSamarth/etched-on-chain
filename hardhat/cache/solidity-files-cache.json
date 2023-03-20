@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "C:\\Users\\Samarth Saxena\\Desktop\\Vasu\\Code\\etched-on-chain\\hardhat\\contracts\\Confessions.sol": {
-      "lastModificationDate": 1679239746660,
-      "contentHash": "8e70a9417ef86c016e93bf4fb0091414",
+      "lastModificationDate": 1679303991877,
+      "contentHash": "774b276f5207941bdd1a42e43ad17679",
       "sourceName": "contracts/Confessions.sol",
       "solcConfig": {
         "version": "0.8.18",
@@ -19,12 +19,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },

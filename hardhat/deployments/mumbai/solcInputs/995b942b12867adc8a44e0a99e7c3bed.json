@@ -1,0 +1,35 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "contracts/Confessions.sol": {
+      "content": "// SPDX-License-Identifier: MIT\r\n\r\npragma solidity ^0.8.18;\r\n\r\ncontract Confessions{\r\n    \r\n    event Confessed(string confession);\r\n\r\n    function confess(string memory theConfession) public {\r\n        emit Confessed(theConfession);\r\n    \r\n    } \r\n\r\n}\r\n\r\n\r\n/*\r\n> const confessionsFactory = await ethers.getContractFactory(\"Confessions\")\r\n> const confessions= await confessionsFactory.deploy()\r\n> const transactionResponse = await confessions.confess(\"another confession\")\r\n> const transactionReceipt = await transactionResponse.wait()\r\n> console.log(transactionReceipt.events[0])\r\n> console.log(transactionReceipt.events[0].args.confession\r\n> const allevents = await confessions.queryFilter(\"Confessed\")\r\n> console.log(allevents.length)\r\n\r\n\r\n\r\n*/\r\n"
+    }
+  },
+  "settings": {
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "metadata": {
+      "useLiteralContent": true
+    }
+  }
+}

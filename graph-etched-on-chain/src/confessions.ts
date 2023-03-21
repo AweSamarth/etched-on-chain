@@ -7,9 +7,5 @@ export function handleConfessed(event: ConfessedEvent): void {
   )
   entity.confession = event.params.confession
 
-  entity.blockNumber = event.block.number
-  entity.blockTimestamp = event.block.timestamp
-  entity.transactionHash = event.transaction.hash
-
   entity.save()
 }

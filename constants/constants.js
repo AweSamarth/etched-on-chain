@@ -1,4 +1,5 @@
-[
+export const ADDRESS = "0x16E7eF94cE592114EbCDF29a1Af5FfD3fb3634Aa"
+export const ABI =[
   {
     "anonymous": false,
     "inputs": [

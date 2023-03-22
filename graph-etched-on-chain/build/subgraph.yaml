@@ -6,9 +6,9 @@ dataSources:
     name: Confessions
     network: mumbai
     source:
-      address: "0x6bd724AF600D5CCC313Dac0BA6B96dCed1C07F6d"
+      address: "0x16E7eF94cE592114EbCDF29a1Af5FfD3fb3634Aa"
       abi: Confessions
-      startBlock: 33352584
+      startBlock: 33434586
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7

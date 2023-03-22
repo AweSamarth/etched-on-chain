@@ -3,11 +3,19 @@
 pragma solidity ^0.8.18;
 
 contract Confessions{
-    
+    uint256 counter = 0;
+
+
+
     event Confessed(string confession);
+
+    function getCounter() public view returns(uint256){
+        return counter;
+    }
 
     function confess(string memory theConfession) public {
         emit Confessed(theConfession);
+        counter++;
     
     } 
 

@@ -112,7 +112,7 @@ export default function Home() {
             <div className="       border-red-500 pb-4">
               <div className=" w-max        border- font-cardo pb-2 tracking-wide  underline text-[#C3B091] text-3xl  text-justify ">
                 {" "}
-                {theConfessionObject||loading
+                {theConfessionObject&&!loading
                   ? <div>{`Confession #${theConfessionObject.index}`}</div>
                   : "Confession #"}
               </div>

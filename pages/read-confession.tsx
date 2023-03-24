@@ -38,6 +38,7 @@ export default function Home() {
   let checker =0
   useEffect(() => {
     checker++
+    console.log(checker)
     if(checker>1){
     newConfession();
     }

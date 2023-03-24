@@ -105,7 +105,7 @@ export default function Home() {
   };
 
   const jokeRedirect = async () => {
-    document.location.href = "https://www.youtube.com/watch?v=_R6M0vBxLac";
+    document.location.href = "https://www.youtube.com/watch?v=_R6M0vBxLac?autoplay=1";
   };
 
   return (

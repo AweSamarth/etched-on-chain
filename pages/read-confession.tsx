@@ -38,7 +38,9 @@ export default function Home() {
   let checker =0
   useEffect(() => {
     checker++
+    if(checker>1){
     newConfession();
+    }
   }, []);
 
   async function newConfession() {

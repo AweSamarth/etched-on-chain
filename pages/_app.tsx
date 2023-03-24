@@ -19,7 +19,7 @@ import { Inter, Cardo, IM_Fell_English } from "next/font/google";
 import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
 import { useState } from "react";
 
-const client = new ApolloClient({
+export const client = new ApolloClient({
   cache: new InMemoryCache(),
   uri: "https://api.studio.thegraph.com/query/43422/graph-etched-on-chain/0.0.2",
 });

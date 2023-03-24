@@ -8,6 +8,8 @@ import { Oval } from "react-loader-spinner";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { useRouter } from 'next/router';
+import NoSsr from "./components/NoSsr";
+
 
 import {
   useAccount,
@@ -43,6 +45,7 @@ export default function Home() {
   const { openConnectModal } = useConnectModal();
   const [theConfession, setTheConfession] = useState("");
   const [buttonClicked, setButtonClicked] = useState(false);
+  const [loading, setLoading] = useState(false)
   const contract = useContract({
     address: ADDRESS,
     abi: ABI,
@@ -72,12 +75,13 @@ export default function Home() {
           console.log(contract);
           try {
             console.log("well?");
-
+            setLoading(true)
             const confess = await contract.confess(theConfession.trim());
             console.log(confess)
             
             const temp =await waitForTransaction({hash:confess.hash}) 
             setButtonClicked(false);
+            setLoading(false)
             router.push({
               pathname:"success",
               query:{txHash:confess.hash}
@@ -85,6 +89,7 @@ export default function Home() {
           } catch (error) {
             console.error(error);
             setButtonClicked(false);
+            setLoading(false)
 
           }
         }
@@ -117,9 +122,11 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className=" min-h-screen">
-        <div id="navbar" className="w-max h-14 ml-auto pt-4 pr-8">
-          <div className="">
+
+      <div  id="main_div" className="  border-2 border-orange-400 min-h-screen flex flex-col justify-between px-2">
+
+        <div id="averageheadenjoyer" className="flex justify-end  border-2 border-white w-full h-14 ml-auto pt-1 pr-8 ">
+          <div className="w-max">
             {/* <ConnectButton
               accountStatus={{
                 smallScreen: "avatar",
@@ -132,7 +139,7 @@ export default function Home() {
             /> */}
             <Link href="read-confession">
               <div className="bg-[#EEEEEE] select-none px-6 py-2 rounded md cursor-pointer hover:bg-[#d2d2d2] transition-all duration-200 active:bg-[#c5c5c5]">
-                <span className=" h-12    border-red-500">
+                <span className=" h-12    border-2 border-red-500">
                   <FontAwesomeIcon icon={faBookOpen as IconProp} />
                 </span>
                 <span className="font-imfell text-lg ml-2">
@@ -143,14 +150,14 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="    border-red-800  flex flex-col  justify-between px-4 ">
-          <div className="flex  justify-center        border-blue-600 py-2 px-16">
+        <div className="    min-h-[calc(100vh-7.5rem)] border-2 border-red-800 flex flex-col  justify-between px-20 ">
+          <div className="flex  justify-center        border-2 border-blue-600 py-2 px-16">
             <div className=" text-5xl font-cardo tracking-wide text-[#ffffff]  h-min ">
               <Link href="/">etched on chain</Link>
             </div>
           </div>
 
-          <div className="      border-green-500 flex-col  px-20 pt-8 pb-1 mt-4">
+          <div className="      border-2 border-green-500 flex-col  px-20 pt-8 pb-1 mt-4">
             <div className=" px-52">
               <div className="font-imfell italic text-[#C3B091]    text-2xl max-w-[39rem]  text-justify">
                 {" "}
@@ -168,8 +175,8 @@ export default function Home() {
               </div>
             </div>
           </div>
-
-          <div className="     border-green-500 flex justify-center  mt-3">
+          <NoSsr>
+          <div className="     border-2 border-green-500 flex justify-center -mt-1">
             <div className=" h-28 font-imfell  min-w-[40%] text-[#181818]  tracking-wide text-[1.35rem] rounded-md max-w-[39rem]  text-justify flex justify-center">
               {" "}
               <button
@@ -177,7 +184,7 @@ export default function Home() {
                 className=" outline-none cursor-pointer  min-w-[40%]   hover:bg-[#deb470] transition-all duration-100 active:bg-[#d2aa69] self-start py-3 px-2 bg-[#FFCF80] rounded-md"
               >
                 <div className=" w-full flex justify-center">
-                {buttonClicked ? (
+                {isConnecting|| loading ? (
                   <Oval
                     height={27}
                     width={30}
@@ -197,16 +204,14 @@ export default function Home() {
               </button>
             </div>
           </div>
+          </NoSsr>
 
-          <div className="text-white mt-[3.35rem] mx-6   text-3xl  flex gap-5  pt-1 pb-2 relative bottom-0  ">
-            <span className="">
-              <FontAwesomeIcon icon={faGithub} />{" "}
-            </span>
-            <span>
-              <FontAwesomeIcon icon={faTwitter} />
-            </span>
-          </div>
+
         </div>
+        <div id="averagefeetenjoyer" className="     border-2 border-green-500  text-3xl px-12 flex gap-5 pt-4 h-16">
+          <Link href="https://github.com/awesamarth/" target="_blank"><span className=" text-[#695d4b] hover:cursor-pointer  hover:text-[#f0f6fc] transition-all"><FontAwesomeIcon icon={faGithub} /> </span></Link>
+          <Link href="https://twitter.com/awesamarth_/" target="_blank"><span className= "text-[#695d4b] hover:cursor-pointer hover:text-[#1c9aef] transition-all"><FontAwesomeIcon icon={faTwitter} /></span></Link>
+          </div>
       </div>
     </>
   );

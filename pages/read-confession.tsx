@@ -7,8 +7,9 @@ import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import Link from "next/link";
 import { gql, useQuery } from "@apollo/client";
-import { useContractRead } from "wagmi";
+import { useContract, useContractRead, useProvider, useSigner } from "wagmi";
 import { ADDRESS, ABI } from "@/constants/constants";
+import { Oval } from "react-loader-spinner";
 
 import {
   faSearch,
@@ -17,59 +18,60 @@ import {
   faBookOpen,
 } from "@fortawesome/free-solid-svg-icons";
 import { faGithub, faTwitter } from "@fortawesome/free-brands-svg-icons";
+import { client } from "./_app";
 
-
-
-
-
-const GET_CONFESSIONS = gql`
-{
-  confesseds {
-    id
-    confession
-  }
-}
-`
+let arrlength: number = -1;
 
 export default function Home() {
+  const provider = useProvider();
+  const { data: signer } = useSigner();
 
-  
-const {data:contractData, isError, isLoading} = useContractRead({
-  address: ADDRESS,
-  abi:ABI,
-  functionName:"getCounter"
-})
+  const contract = useContract({
+    address: ADDRESS,
+    abi: ABI,
+    signerOrProvider: signer || provider,
+  });
 
+  const [loading, setLoading] = useState(false)
+  const [randomIndex, setRandomIndex] = useState<number>();
+  const [theConfessionObject, setTheConfessionObject] = useState<any>(null);
 
-  // console.log((contractData as any .toString())
-  const {loading, error, data} = useQuery(GET_CONFESSIONS)
+  useEffect(() => {
 
-  console.log(data)
+    newConfession();
+  }, []);
 
+  async function newConfession() {
+    setLoading(true)
+    console.log("this worked") 
+    console.log(arrlength)
+    arrlength = await contract?.getCounter();
 
-  const [randomIndex, setRandomIndex] = useState<number>()
-  const [theConfessionObject, setTheConfessionObject] = useState<any>()
+    if(arrlength!=-1&&contract){
 
-  
+      const index = Math.floor(Math.random() * arrlength);
 
-  useEffect(()=>{
-    if(data){
-      newConfession()
+      const { data } = await client.query({
+        query: gql`
+        query GetConfessions($index:Int!) {
+        confesseds(first: 1, skip:$index) {
+          id
+          confession
+        }
+      }
+    `,
+    variables:{index}
+      });
+      console.log(data.confesseds[0].confession);
       
+
+       const theConfession = data.confesseds[0].confession
+       setTheConfessionObject({index:arrlength-index, theConfession:theConfession})
+       setLoading(false)
     }
-  },[randomIndex])
-
-  function newConfession(){
-    if(data){
-     const index= Math.floor(Math.random()*data.confesseds.length)
-     const theConfession = data.confesseds[index].confession
-     setTheConfessionObject({index:index, theConfession:theConfession})
     }
-  }
-
-
-
   
+
 
   return (
     <>
@@ -79,82 +81,93 @@ const {data:contractData, isError, isLoading} = useContractRead({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className=" min-h-screen">
-        <div id="navbar" className="w-max h-14 ml-auto pt-4 pr-8">
-          <div className="">
-            {/* <ConnectButton
-              accountStatus={{
-                smallScreen: "avatar",
-                largeScreen: "full",
-              }}
-              showBalance={{
-                smallScreen: false,
-                largeScreen: true,
-              }}
-            /> */}
+      <div  id="main_div" className="  min-h-screen       border-orange-400  flex flex-col justify-between px-2">
+
+      <div id="averageheadenjoyer" className=" max-[520px]:h-10             border-white w-full h-14 ml-auto pt-4 pr-8 ">
+          <div>
           </div>
-        </div>
-        <div className="    flex flex-col  justify-between px-3 ">
+        </div> 
+
+
+
+
+        <div className="    min-h-[calc(100vh-7.5rem)]  border-red-800 flex flex-col  justify-between px-20 max-[850px]:px-5 max-[520px]:px-3 ">
+          
+
 
           
-          <div className="flex  justify-center mx-16         border-blue-600 py-2">
-          
-            <div className=" text-5xl font-cardo tracking-wide text-[#ffffff]  h-min ">
-            <Link href="/">  etched on chain </Link>
+        <div className="flex  justify-center        border-blue-600 py-2 mx-10 max-[520px]:mx-0  ">
+          <div className="  text-5xl font-cardo tracking-wide text-[#ffffff]  h-min l max-[520px]:text-[2.5rem]  ">
+              <Link href="/"> etched on chain </Link>
             </div>
-           
           </div>
-      
 
-          <div className="    mx-16     border-green-500 flex-col  px-4 pt-8 pb-1 mt-10">
-            <div className="px-52 pb-4">
-              <div className="font-cardo pb-2 tracking-wide  underline text-[#C3B091] text-3xl max-w-[39rem] text-justify ">
+          <div className=" w-[40rem] mx-16  -mb-2 self-center   border-green-500 flex-col  pt-4 pb-1 mt-10">
+            <div className="    border-red-500 pb-4">
+              <div className=" w-max     border- font-cardo pb-2 tracking-wide  underline text-[#C3B091] text-3xl  text-justify ">
                 {" "}
-
-                {theConfessionObject?`Confession #${theConfessionObject.index+1}`:"Confession #"}
+                {theConfessionObject
+                  ? <div>{`Confession #${theConfessionObject.index}`}</div>
+                  : "Confession #"}
               </div>
 
-              <div className="mt-4">
-                <div className="flex w-full  min-h-[7.7rem] flex-col justify-center  mt-2  py-8 px-5 resize-none font-sans rounded-xl bg-[#646464] text-[#f2f2f2] text-[1.4rem] outline-none">
-                  {theConfessionObject?(<div className=" h-min text-center italic">
-                  {`"${theConfessionObject.theConfession}"`}
-                  </div>):""}    
-
-                           
-
+              <div className="mt-4 ">
+                <div className="flex w-full   min-h-[7.7rem] flex-col justify-center  mt-2  py-8 px-5 resize-none font-sans rounded-xl bg-[#646464] text-[#f2f2f2] text-[1.4rem] outline-none">
+                  <div className=" h-min text-center flex justify-center italic "> 
+                  {theConfessionObject ? (`"${theConfessionObject.theConfession}"`
+                      ) : (
+                    <div className=" w-min">
+                    <Oval
+                    height={27}
+                    width={30}
+                    color="#ededed"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                    visible={true}
+                    ariaLabel="oval-loading"
+                    secondaryColor="#dedede"
+                    strokeWidth={2}
+                    strokeWidthSecondary={2}
+                    />
+                  </div>
+                  )}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="   mx-16     border-green-500 flex flex-col justify-center pb-4 mt-6">
+          <div className="   mx-16  gap-[0.3rem]     border-green-500 flex flex-col justify-center pb-4 mb-16">
             <div className=" py-4    text-[1.25rem]   font-imfell text-justify flex justify-center">
-              <div className="bg-[#EEEEEE] px-8 py-3 rounded-md  cursor-pointer hover:bg-[#d2d2d2] transition-all duration-200 active:bg-[#c5c5c5] select-none flex gap-3       border-red-500">
-                <span className="      border-red-500 rounded-md">
+              <button  onClick={()=>newConfession()} disabled={loading} className=" disabled:cursor-not-allowed disabled:bg-[#949494] bg-[#EEEEEE] px-8 py-3 rounded-md  cursor-pointer hover:bg-[#d2d2d2] transition-all duration-200 active:bg-[#c5c5c5] select-none flex gap-3               border-red-500">
+                <span className="              border-red-500 rounded-md" >
                   <FontAwesomeIcon icon={faBookOpen as IconProp} />
                 </span>
-                <span className="font-imfell" onClick={newConfession}>read another random confession</span>
-              </div>
+                <span className="font-imfell  ">
+                  read another random confession
+                </span>
+              </button>
             </div>
-            <div className="  text-[#] py-4    text-[1.25rem]   font-imfell text-justify flex justify-center">
-              <div className="bg-[#ffcf80] px-8 py-3 rounded-md  flex gap-3 cursor-pointer  hover:bg-[#deb470] transition-all duration-100 active:bg-[#d2aa69]      border-red-500">
-                <span className="      border-red-500 rounded-md">
-                <FontAwesomeIcon icon={faFeather as IconProp}  />
+
+            <div className="  text-[#] pt-1     text-[1.25rem]   font-imfell text-justify flex justify-center">
+             <Link href="write-confession"> <div className="bg-[#ffcf80] px-8 py-3 rounded-md  flex gap-3 cursor-pointer  hover:bg-[#deb470] transition-all duration-100 active:bg-[#d2aa69]              border-red-500">
+                <span className="          border-red-500 rounded-md">
+                  <FontAwesomeIcon icon={faFeather as IconProp} />
                 </span>
                 <span className="font-imfell">write a confession</span>
               </div>
+              </Link>
             </div>
           </div>
-        <div className="text-white  mx-7 mt-[0.71rem]   text-3xl  flex gap-5  pb-2 relative bottom-0  ">
-          <span className=""><FontAwesomeIcon icon={faGithub} /> </span>
-          <span><FontAwesomeIcon icon={faTwitter} /></span>
-          </div>
 
 
-  
+
+
         </div>
-
-
+        <div id="averagefeetenjoyer" className="   border-green-500  text-3xl px-12 flex gap-5 pt-4 h-16 max-[850px]:pt-5 max-[850px]:px-4 ">
+          <Link href="https://github.com/awesamarth/" target="_blank"><span className=" text-[#695d4b] hover:cursor-pointer  hover:text-[#f0f6fc] transition-all"><FontAwesomeIcon icon={faGithub} /> </span></Link>
+          <Link href="https://twitter.com/awesamarth_/" target="_blank"><span className= "text-[#695d4b] hover:cursor-pointer hover:text-[#1c9aef] transition-all"><FontAwesomeIcon icon={faTwitter} /></span></Link>
+          </div>
       </div>
     </>
   );

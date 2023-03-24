@@ -7,15 +7,15 @@ contract Confessions{
 
 
 
-    event Confessed(string confession);
+    event Confessed(string confession, uint num);
 
     function getCounter() public view returns(uint256){
         return counter;
     }
 
     function confess(string memory theConfession) public {
-        emit Confessed(theConfession);
         counter++;
+        emit Confessed(theConfession, counter);
     
     } 
 

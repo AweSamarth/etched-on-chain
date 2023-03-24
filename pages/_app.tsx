@@ -21,7 +21,7 @@ import { useState } from "react";
 
 export const client = new ApolloClient({
   cache: new InMemoryCache(),
-  uri: "https://api.studio.thegraph.com/query/43422/graph-etched-on-chain/0.0.2",
+  uri: "https://api.studio.thegraph.com/query/43422/graph-etched-on-chain/0.0.3",
 });
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });

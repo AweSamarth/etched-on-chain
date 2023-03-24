@@ -1,4 +1,4 @@
-export const ADDRESS = "0x16E7eF94cE592114EbCDF29a1Af5FfD3fb3634Aa"
+export const ADDRESS = "0xDef94e2eaE1A10BaEE9421Bf53594096918Cc931"
 export const ABI =[
   {
     "anonymous": false,
@@ -8,6 +8,12 @@ export const ABI =[
         "internalType": "string",
         "name": "confession",
         "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "num",
+        "type": "uint256"
       }
     ],
     "name": "Confessed",

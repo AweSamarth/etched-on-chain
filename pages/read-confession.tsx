@@ -39,7 +39,7 @@ export default function Home() {
   useEffect(() => {
     checker++
     console.log(checker)
-    if(checker>1){
+    if(checker==1){
     newConfession();
     }
   }, []);

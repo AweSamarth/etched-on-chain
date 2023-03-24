@@ -42,34 +42,6 @@ export default function Home() {
   }, []);
 
   async function newConfession() {
-    console.log(checker)
-      if(checker>=2){
-        setLoading(true)
-        arrlength = await contract?.getCounter();
-        if(arrlength!=-1&&contract){
-          const index = Math.floor(Math.random() * arrlength);
-        const { data } = await client.query({
-          query: gql`
-          query GetConfessions($index:Int!) {
-          confesseds(first: 1, skip:$index) {
-            id
-            confession
-            num
-          }
-        }
-      `,
-      variables:{index}
-        });
-        const theConfession = data.confesseds[0].confession
-        const theIndex= data.confesseds[0].num
-       setTheConfessionObject({index:theIndex, theConfession:theConfession})
-       setLoading(false)
-       console.log("ran")
-      }
-    } 
-
-    }
-  async function newClickedConfession() {
       console.log(checker)
           setLoading(true)
           arrlength = await contract?.getCounter();
@@ -175,7 +147,7 @@ export default function Home() {
            
            
             <div className=" py-4 -mt-4    text-[1.25rem] max-[520px]:text-[1.2rem]  font-imfell text-justify flex justify-center">
-              <button  onClick={()=>newClickedConfession()} disabled={loading} className="
+              <button  onClick={()=>newConfession()} disabled={loading} className="
                disabled:cursor-not-allowed disabled:bg-[#949494] bg-[#EEEEEE] px-8 py-3 rounded-md  
                cursor-pointer hover:bg-[#d2d2d2] transition-all duration-200 active:bg-[#c5c5c5] select-none 
                flex gap-3    border-red-500 

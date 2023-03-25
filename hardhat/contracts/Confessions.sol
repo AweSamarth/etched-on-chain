@@ -16,7 +16,7 @@ contract Confessions{
     function confess(string memory theConfession) public {
         counter++;
         emit Confessed(theConfession, counter);
-    
+        
     } 
 
 }

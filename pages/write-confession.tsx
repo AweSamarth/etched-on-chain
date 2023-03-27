@@ -61,18 +61,18 @@ export default function Home() {
         provider &&
         signer
       ) {
-        console.log("chain id is" + chain.id);
-        console.log(address);
-        console.log(buttonClicked);
-        console.log(provider);
-        console.log(signer);
+        // console.log("chain id is" + chain.id);
+        // console.log(address);
+        // console.log(buttonClicked);
+        // console.log(provider);
+        // console.log(signer);
         if (contract) {
-          console.log(contract);
+          // console.log(contract);
           try {
-            console.log("well?");
+            // console.log("well?");
             setLoading(true);
             const confess = await contract.confess(theConfession.trim());
-            console.log(confess);
+            // console.log(confess);
 
             const temp = await waitForTransaction({ hash: confess.hash });
             setButtonClicked(false);
@@ -91,6 +91,11 @@ export default function Home() {
     }
     writer();
   }, [chain, address, buttonClicked, signer, provider]);
+
+  useEffect(()=>{
+    console.log("\nLooking under the hood eh? I assume you're a developer/designer. Here is the link to the GitHub repo of this project ;)\nhttps://github.com/awesamarth/etched-on-chain")
+
+  },[])
 
   const confess = async () => {
     setButtonClicked(true);

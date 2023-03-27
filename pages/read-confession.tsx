@@ -23,13 +23,13 @@ import { client } from "./_app";
 let arrlength: number = -1;
 
 export default function Home() {
-  const provider = useProvider();
-  const { data: signer } = useSigner();
+  const provider = useProvider({chainId:80001});
+  const { data: signer } = useSigner({chainId:80001});
 
   const contract = useContract({
     address: ADDRESS,
     abi: ABI,
-    signerOrProvider: signer || provider,
+    signerOrProvider: provider,
   });
 
   const [loading, setLoading] = useState(false)
@@ -38,15 +38,16 @@ export default function Home() {
   let checker =0
   useEffect(() => {
     checker++
-    console.log(checker)
+    // console.log(checker)
     if(checker==1){
     newConfession();
     }
+
   }, []);
 
   async function newConfession() {
-      console.log(checker)
           setLoading(true)
+
           arrlength = await contract?.getCounter();
           if(arrlength!=-1&&contract){
             const index = Math.floor(Math.random() * arrlength);
@@ -66,7 +67,9 @@ export default function Home() {
           const theIndex= data.confesseds[0].num
          setTheConfessionObject({index:theIndex, theConfession:theConfession})
          setLoading(false)
-         console.log("ran")
+        //  console.log("ran")
+        console.log("\nLooking under the hood eh? I assume you're a developer/designer. Here is the link to the GitHub repo of this project ;)\nhttps://github.com/awesamarth/etched-on-chain")
+
         }
       
   

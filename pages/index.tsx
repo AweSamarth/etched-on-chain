@@ -1,5 +1,5 @@
 import Head from "next/head";
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import Link from "next/link";
@@ -20,6 +20,11 @@ import {
 import { faGithub, faTwitter } from "@fortawesome/free-brands-svg-icons";
 
 export default function Home() {
+  useEffect(()=>{
+    console.log("\nLooking under the hood eh? I assume you're a developer/designer. Here is the link to the GitHub repo of this project ;)\nhttps://github.com/awesamarth/etched-on-chain")
+
+  },[])
+
   return (
     <>
       <Head>

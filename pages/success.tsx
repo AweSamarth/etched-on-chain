@@ -1,5 +1,5 @@
 import Head from "next/head";
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,7 +10,7 @@ import { useContext } from "react";
 import { txHash } from "./write-confession";
 import { useRouter } from "next/router";
 
-console.log(txHash);
+// console.log(txHash);
 
 import {
   faSearch,
@@ -22,6 +22,11 @@ import { faGithub, faTwitter } from "@fortawesome/free-brands-svg-icons";
 
 export default function Home() {
   const router = useRouter();
+
+  useEffect(()=>{
+    console.log("\nLooking under the hood eh? I assume you're a developer/designer. Here is the link to the GitHub repo of this project ;)\nhttps://github.com/awesamarth/etched-on-chain")
+
+  },[])
 
   return (
     <>

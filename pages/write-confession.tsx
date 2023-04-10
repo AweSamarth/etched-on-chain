@@ -41,6 +41,7 @@ export default function Home() {
   const [theConfession, setTheConfession] = useState("");
   const [buttonClicked, setButtonClicked] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [ready, setReady] = useState(false)
   const contract = useContract({
     address: ADDRESS,
     abi: ABI,
@@ -94,7 +95,7 @@ export default function Home() {
 
   useEffect(()=>{
     console.log("\nLooking under the hood eh? I assume you're a developer/designer. Here is the link to the GitHub repo of this project ;)\nhttps://github.com/awesamarth/etched-on-chain")
-
+    setReady(true)
   },[])
 
   const confess = async () => {
@@ -178,9 +179,13 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <NoSsr>
+          {
 
-            <div className="  mb-4       border-green-500 flex  justify-center -mt-4">
+
+
+            ready?
+
+            (<div className="  mb-4       border-green-500 flex  justify-center -mt-4">
 
 
               <div className=" flex-col items-center font-imfell gap-7   min-w-[40%] text-[#181818] 
@@ -197,7 +202,7 @@ export default function Home() {
                    disabled={isConnecting||loading}
                 >
                   <div className=" w-full flex justify-center">
-                    {isConnecting || loading ? (
+                    { isConnecting || loading ? (
                       <Oval
                         height={27}
                         width={30}
@@ -233,8 +238,8 @@ export default function Home() {
                   </Link>
                 </div>
               </div>
-            </div>
-          </NoSsr>
+            </div>):""
+}
         </div>
 
         <div
